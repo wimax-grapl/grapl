@@ -23,13 +23,11 @@ jobs:
       - name: random-number-generator
         id: random-number-generator
         run: echo "::set-output name=random-id::$(echo $RANDOM)"
-
-      - name: testing something
+      
+      - name: Dump GitHub context
         env:
-          STEPS: ${{ steps }}
-        run: |
-          echo "$STEPS"
-
+          STEPS: ${{ toJson(steps) }}
+        run: echo "$STEPS"
   
   rust-unit-tests:
     runs-on: ubuntu-latest
