@@ -18,16 +18,15 @@ jobs:
         run: |
           docker build -f .github/etc/cargo-audit/Dockerfile -t grapl/grapl-cargo-audit:latest src/rust
           docker run -t grapl/grapl-cargo-audit:latest cargo audit
-      
 
       - name: random-number-generator
         id: random-number-generator
         run: echo "::set-output name=random-id::$(echo $RANDOM)"
-      
-      - name: Dump GitHub context
+
+      - name: Dump steps context
         env:
-          STEPS: ${{ toJson(steps) }}
-        run: echo "$STEPS"
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
   
   rust-unit-tests:
     runs-on: ubuntu-latest
