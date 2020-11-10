@@ -96,8 +96,8 @@ def _after_tests() -> None:
     Add any "after tests are executed, but before docker-compose down" stuff here.
     """
     # Issue a command to dgraph to export the whole database.
-    # This is then stored on a volume, `compose_artifacts`.
-    # The contents of the volume are made available to Github Actions via `dump_compose_artifacts.py`.
+    # This is then stored on a volume, `dgraph_export` (defined in docker-compose.yml)
+    # The contents of the volume are made available to Github Actions via `dump_artifacts.py`.
     export_request = requests.get("http://grapl-master-graph-db:8080/admin/export")
     assert export_request.json()["code"] == "Success"
 
