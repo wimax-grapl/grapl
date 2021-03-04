@@ -78,29 +78,28 @@ async fn handler() -> Result<(), Box<dyn std::error::Error>> {
 
     let cache = &mut event_caches(&env).await;
 
+    let mg_alphas = grapl_config::mg_alphas();
+    mg_alphas
+        .iter()
+        // Shoehorn `http://` in, if the user understandably forgot to do so
+        .for_each(|mg_alpha| {
+            if !mg_alpha.contains("http") {
+                panic!("Graph Merger expects an http in its MG_ALPHAS, got {}", mg_alpha)
+            }
+        });
+
     // todo: the intitializer should give a cache to each service
     let graph_merger = &mut make_ten(async {
-        let mg_alphas = grapl_config::mg_alphas();
-        // Shoehorn `http://` in, if the user understandably forgot to do so
-        let mg_alphas = mg_alphas
-            .into_iter()
-            .map(|mg_alpha| {
-                if mg_alpha.contains("http://") {
-                    mg_alpha
-                } else {
-                    format!("http://{}", mg_alpha)
-                }
-            })
-            .collect();
+        let mg_alphas_copy = mg_alphas.clone();
         tracing::debug!(
-            mg_alphas=?&mg_alphas,
+            mg_alphas=?&mg_alphas_copy,
             "Connecting to mg_alphas"
         );
         let dynamo = DynamoDbClient::from_env();
         let reverse_edge_resolver =
             ReverseEdgeResolver::new(dynamo, MetricReporter::new(&env.service_name), 1000);
         GraphMerger::new(
-            mg_alphas,
+            mg_alphas_copy,
             reverse_edge_resolver,
             MetricReporter::new(&env.service_name),
             cache[0].clone(),
