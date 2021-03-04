@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 TODO: I believe this script is superceded by `upload-sysmon-logs`, which takes in both
---bucket-prefix and --log-file.
+--deployment-name and --log-file.
 """
 
 import argparse
@@ -93,14 +93,14 @@ def main(prefix):
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Send demo logs to Grapl")
-    parser.add_argument("--bucket_prefix", dest="bucket_prefix", required=True)
+    parser.add_argument("--deployment_name", dest="deployment_name", required=True)
     return parser.parse_args()
 
 
 if __name__ == "__main__":
 
     args = parse_args()
-    if args.bucket_prefix is None:
-        raise Exception("Provide bucket prefix as first argument")
+    if args.deployment_name is None:
+        raise Exception("Provide deployment name as first argument")
     else:
-        main(args.bucket_prefix)
+        main(args.deployment_name)

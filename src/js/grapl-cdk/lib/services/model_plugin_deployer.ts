@@ -59,7 +59,7 @@ export class ModelPluginDeployer extends cdk.NestedStack {
                 MG_ALPHAS: props.dgraphSwarmCluster.alphaHostPort(),
                 JWT_SECRET_ID: props.jwtSecret.secretArn,
                 USER_AUTH_TABLE: props.userAuthTable.user_auth_table.tableName,
-                BUCKET_PREFIX: props.prefix,
+                DEPLOYMENT_NAME: props.prefix,
                 UX_BUCKET_URL: 'https://' + ux_bucket.bucketRegionalDomainName,
             },
             timeout: cdk.Duration.seconds(25),

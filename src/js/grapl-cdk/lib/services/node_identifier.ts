@@ -26,10 +26,10 @@ export class NodeIdentifier extends cdk.NestedStack {
         const history_db = new HistoryDb(this, 'HistoryDB', props);
 
         const service_name = "node-identifier";
-        const bucket_prefix = props.prefix.toLowerCase();
+        const deployment_name = props.prefix.toLowerCase();
         const unid_subgraphs = new EventEmitter(
             this,
-            bucket_prefix + '-unid-subgraphs-generated'
+            deployment_name + '-unid-subgraphs-generated'
         );
         this.bucket = unid_subgraphs.bucket;
         this.topic = unid_subgraphs.topic;

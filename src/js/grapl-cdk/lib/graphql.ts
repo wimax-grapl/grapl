@@ -37,7 +37,7 @@ export class GraphQLEndpoint extends cdk.Construct {
             environment: {
                 MG_ALPHAS: props.dgraphSwarmCluster.alphaHostPort(),
                 JWT_SECRET_ID: props.jwtSecret.secretArn,
-                BUCKET_PREFIX: props.prefix,
+                DEPLOYMENT_NAME: props.prefix,
                 UX_BUCKET_URL: 'https://' + ux_bucket.bucketRegionalDomainName,
             },
             timeout: cdk.Duration.seconds(30),

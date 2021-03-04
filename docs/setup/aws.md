@@ -153,10 +153,10 @@ cd $GRAPL_ROOT
 export GRAPL_DEPLOYMENT_NAME="Grapl-MYDEPLOYMENT"
 
 # upload analyzers
-BUCKET_PREFIX=$GRAPL_DEPLOYMENT_NAME etc/aws/upload_analyzer_prod.sh
+DEPLOYMENT_NAME=$GRAPL_DEPLOYMENT_NAME etc/aws/upload_analyzer_prod.sh
 # upload logs
 python3 etc/local_grapl/bin/upload-sysmon-logs.py \
-  --bucket_prefix $GRAPL_DEPLOYMENT_NAME \
+  --deployment_name $GRAPL_DEPLOYMENT_NAME \
   --logfile etc/sample_data/eventlog.xml 
 ```
 

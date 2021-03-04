@@ -22,10 +22,10 @@ export class EngagementCreator extends cdk.NestedStack {
     ) {
         super(scope, id);
 
-        const bucket_prefix = props.prefix.toLowerCase();
+        const deployment_name = props.prefix.toLowerCase();
         const analyzer_matched_sugraphs = new EventEmitter(
             this,
-            bucket_prefix + '-analyzer-matched-subgraphs'
+            deployment_name + '-analyzer-matched-subgraphs'
         );
         this.bucket = analyzer_matched_sugraphs.bucket;
 

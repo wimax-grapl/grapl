@@ -23,10 +23,10 @@ export class SysmonGraphGenerator extends cdk.NestedStack {
         super(parent, id);
 
         const service_name = "sysmon-generator";
-        const bucket_prefix = props.prefix.toLowerCase();
+        const deployment_name = props.prefix.toLowerCase();
         const sysmon_log = new EventEmitter(
             this,
-            bucket_prefix + '-sysmon-log'
+            deployment_name + '-sysmon-log'
         );
 
         const event_cache = new RedisCluster(this, 'SysmonEventCache', props);
@@ -36,7 +36,7 @@ export class SysmonGraphGenerator extends cdk.NestedStack {
             prefix: props.prefix,
             environment: {
                 RUST_LOG: props.sysmonSubgraphGeneratorLogLevel,
-                BUCKET_PREFIX: bucket_prefix,
+                DEPLOYMENT_NAME: deployment_name,
                 EVENT_CACHE_CLUSTER_ADDRESS: event_cache.address,
             },
             vpc: props.vpc,

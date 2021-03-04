@@ -86,7 +86,7 @@ export class FargateService {
         this.queues = queues;
 
         const defaultEnv: { [key: string]: string; } = {
-            "BUCKET_PREFIX": props.prefix,
+            "DEPLOYMENT_NAME": props.prefix,
             "DEAD_LETTER_QUEUE_URL": this.queues.deadLetterQueue.queueUrl,
             "GRAPL_LOG_LEVEL": "DEBUG",
             "RUST_LOG": "warn,main=debug,sqs-executor=info",

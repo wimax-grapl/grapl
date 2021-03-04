@@ -79,7 +79,7 @@ export class GraplCdkStack extends cdk.Stack {
         super(scope, id, props);
 
         this.prefix = props.stackName;
-        const bucket_prefix = this.prefix.toLowerCase();
+        const deployment_name = this.prefix.toLowerCase();
 
         const edgeApi = new apigateway.RestApi(this, 'EdgeApiGateway', {});
         edgeApi.addUsagePlan('EdgeApiGatewayUsagePlan', {
@@ -171,7 +171,7 @@ export class GraplCdkStack extends cdk.Stack {
         }
 
         const analyzers_bucket = new GraplS3Bucket(this, 'AnalyzersBucket', {
-            bucketName: bucket_prefix + '-analyzers-bucket',
+            bucketName: deployment_name + '-analyzers-bucket',
             removalPolicy: cdk.RemovalPolicy.DESTROY,
             encryption: s3.BucketEncryption.KMS_MANAGED,
             blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
@@ -198,7 +198,7 @@ export class GraplCdkStack extends cdk.Stack {
         new DGraphTtl(this, 'dgraph-ttl', graplProps);
 
         const model_plugins_bucket = new GraplS3Bucket(this, 'ModelPluginsBucket', {
-            bucketName: bucket_prefix + '-model-plugins-bucket',
+            bucketName: deployment_name + '-model-plugins-bucket',
             removalPolicy: cdk.RemovalPolicy.DESTROY,
         });
 

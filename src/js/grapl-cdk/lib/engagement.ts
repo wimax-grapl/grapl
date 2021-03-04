@@ -74,7 +74,7 @@ export class EngagementEdge extends cdk.NestedStack {
                 JWT_SECRET_ID: props.jwtSecret.secretArn,
                 USER_AUTH_TABLE: props.userAuthTable.user_auth_table.tableName,
                 UX_BUCKET_URL: 'https://' + ux_bucket.bucketRegionalDomainName,
-                BUCKET_PREFIX: props.prefix,
+                DEPLOYMENT_NAME: props.prefix,
             },
             timeout: cdk.Duration.seconds(25),
             memorySize: 256,

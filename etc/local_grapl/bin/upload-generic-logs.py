@@ -111,7 +111,7 @@ def main(prefix, logfile):
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Send generic logs to Grapl")
-    parser.add_argument("--bucket_prefix", dest="bucket_prefix", required=True)
+    parser.add_argument("--deployment_name", dest="deployment_name", required=True)
     parser.add_argument("--logfile", dest="logfile", required=True)
     return parser.parse_args()
 
@@ -119,4 +119,4 @@ def parse_args():
 if __name__ == "__main__":
 
     args = parse_args()
-    main(args.bucket_prefix, args.logfile)
+    main(args.deployment_name, args.logfile)

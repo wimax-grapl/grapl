@@ -26,10 +26,10 @@ export class AnalyzerExecutor extends cdk.NestedStack {
     ) {
         super(scope, id);
 
-        const bucket_prefix = props.prefix.toLowerCase();
+        const deployment_name = props.prefix.toLowerCase();
         const dispatched_analyzer = new EventEmitter(
             this,
-            bucket_prefix + '-dispatched-analyzer'
+            deployment_name + '-dispatched-analyzer'
         );
         this.sourceBucket = dispatched_analyzer.bucket;
 
@@ -41,7 +41,7 @@ export class AnalyzerExecutor extends cdk.NestedStack {
                 prefix: props.prefix,
                 environment: {
                     ANALYZER_MATCH_BUCKET: props.writesTo.bucketName,
-                    BUCKET_PREFIX: bucket_prefix,
+                    DEPLOYMENT_NAME: deployment_name,
                     MG_ALPHAS: props.dgraphSwarmCluster.alphaHostPort(),
                     COUNTCACHE_ADDR: count_cache.cluster.attrRedisEndpointAddress,
                     COUNTCACHE_PORT: count_cache.cluster.attrRedisEndpointPort,
