@@ -65,7 +65,7 @@ def into_sqs_message(bucket: str, key: str) -> str:
     )
 
 
-def main(prefix):
+def main(deployment_name):
 
     s3 = boto3.client("s3")
 
@@ -82,7 +82,7 @@ def main(prefix):
 
         s3.put_object(
             Body=c_body,
-            Bucket="{}-sysmon-log-bucket".format(prefix),
+            Bucket="{}-sysmon-log-bucket".format(deployment_name),
             Key=str(epoch - (epoch % (24 * 60 * 60)))
             + "/sysmon/"
             + str(epoch)

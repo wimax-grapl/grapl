@@ -149,12 +149,11 @@ You can send some test data up to the service by going to the root of the grapl 
 ```bash
 cd $GRAPL_ROOT
 
-# whatever deployment name you defined above
-export GRAPL_DEPLOYMENT_NAME="Grapl-MYDEPLOYMENT"
-
 # upload analyzers
-DEPLOYMENT_NAME=$GRAPL_DEPLOYMENT_NAME etc/aws/upload_analyzer_prod.sh
+etc/aws/upload_analyzer_prod.sh
+
 # upload logs
+AWS_REGION=$GRAPL_REGION \ 
 python3 etc/local_grapl/bin/upload-sysmon-logs.py \
   --deployment_name $GRAPL_DEPLOYMENT_NAME \
   --logfile etc/sample_data/eventlog.xml 
@@ -162,4 +161,10 @@ python3 etc/local_grapl/bin/upload-sysmon-logs.py \
 
 *Note that this will likely impose charges to your AWS account.*
 
-To use the Grapl UX you must navigate to the `index.html` in the grapl ux bucket.
+You can then view the progress of this data flowing through your deployment
+by looking at the Cloudwatch Dashboard named 
+`{GRAPL_DEPLOYMENT_NAME}-PipelineDashboard`.
+
+### Accessing the Grapl UX (Engagement Edge)
+You can find the base url in `src/js/grapl-cdk/cdk-output.json`; just append
+a `/index.html` to the URL in that file.

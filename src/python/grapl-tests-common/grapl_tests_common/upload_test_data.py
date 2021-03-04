@@ -25,7 +25,7 @@ class UploadSysmonLogsTestData(UploadTestData):
     def upload(self, s3_client: S3Client, sqs_client: SQSClient) -> None:
         logging.info(f"S3 uploading test data from {self.path}")
         upload_sysmon_logs(
-            prefix=DEPLOYMENT_NAME,
+            deployment_name=DEPLOYMENT_NAME,
             logfile=self.path,
             s3_client=s3_client,
             sqs_client=sqs_client,
