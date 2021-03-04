@@ -22,7 +22,7 @@ export class EngagementCreator extends cdk.NestedStack {
     ) {
         super(scope, id);
 
-        const deployment_name = props.prefix.toLowerCase();
+        const deployment_name = props.deploymentName.toLowerCase();
         const analyzer_matched_sugraphs = new EventEmitter(
             this,
             deployment_name + '-analyzer-matched-subgraphs'
@@ -30,7 +30,7 @@ export class EngagementCreator extends cdk.NestedStack {
         this.bucket = analyzer_matched_sugraphs.bucket;
 
         this.service = new Service(this, id, {
-            prefix: props.prefix,
+            deploymentName: props.deploymentName,
             environment: {
                 GRAPL_LOG_LEVEL: props.analyzerExecutorLogLevel,
                 MG_ALPHAS: props.dgraphSwarmCluster.alphaHostPort(),

@@ -28,7 +28,7 @@ export class AnalyzerDispatch extends cdk.NestedStack {
         super(scope, id);
 
         const service_name = "analyzer-dispatcher";
-        const deployment_name = props.prefix.toLowerCase();
+        const deployment_name = props.deploymentName.toLowerCase();
         const subgraphs_merged = new EventEmitter(
             this,
             deployment_name + '-subgraphs-merged'
@@ -49,7 +49,7 @@ export class AnalyzerDispatch extends cdk.NestedStack {
         dispatch_event_cache.connections.allowFromAnyIpv4(ec2.Port.allTcp());
 
         this.service = new FargateService(this, service_name, {
-            prefix: props.prefix,
+            deploymentName: props.deploymentName,
             environment: {
                 RUST_LOG: props.analyzerDispatcherLogLevel,
                 ANALYZER_BUCKET: deployment_name + "-analyzers-bucket",

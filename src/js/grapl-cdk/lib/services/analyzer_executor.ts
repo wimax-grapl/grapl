@@ -26,7 +26,7 @@ export class AnalyzerExecutor extends cdk.NestedStack {
     ) {
         super(scope, id);
 
-        const deployment_name = props.prefix.toLowerCase();
+        const deployment_name = props.deploymentName.toLowerCase();
         const dispatched_analyzer = new EventEmitter(
             this,
             deployment_name + '-dispatched-analyzer'
@@ -38,7 +38,7 @@ export class AnalyzerExecutor extends cdk.NestedStack {
         const message_cache = new RedisCluster(this, 'ExecutorMsgCache', props);
 
         this.service = new FargateService(this, id, {
-                prefix: props.prefix,
+                deploymentName: props.deploymentName,
                 environment: {
                     ANALYZER_MATCH_BUCKET: props.writesTo.bucketName,
                     DEPLOYMENT_NAME: deployment_name,

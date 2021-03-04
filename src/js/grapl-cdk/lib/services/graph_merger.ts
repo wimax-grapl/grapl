@@ -23,7 +23,7 @@ export class GraphMerger extends cdk.NestedStack {
         super(scope, id);
 
         const service_name = "graph-merger";
-        const deployment_name = props.prefix.toLowerCase();
+        const deployment_name = props.deploymentName.toLowerCase();
         const subgraphs_generated = new EventEmitter(
             this,
             deployment_name + '-subgraphs-generated'
@@ -39,7 +39,7 @@ export class GraphMerger extends cdk.NestedStack {
         event_cache.connections.allowFromAnyIpv4(ec2.Port.allTcp());
 
         this.service = new FargateService(this, service_name, {
-            prefix: props.prefix,
+            deploymentName: props.deploymentName,
             environment: {
                 EVENT_CACHE_CLUSTER_ADDRESS: event_cache.address,
                 RUST_LOG: props.graphMergerLogLevel,
