@@ -39,7 +39,7 @@ use grapl_service::{decoder::ZstdProtoDecoder,
 use grapl_utils::{future_ext::GraplFutureExt,
                   rusoto_ext::dynamodb::GraplDynamoDbClientExt};
 use lazy_static::lazy_static;
-use log::{error,
+use tracing::{error,
           info,
           warn};
 use rusoto_dynamodb::{AttributeValue,
@@ -79,14 +79,6 @@ async fn handler() -> Result<(), Box<dyn std::error::Error>> {
     let cache = &mut event_caches(&env).await;
 
     let mg_alphas = grapl_config::mg_alphas();
-    mg_alphas
-        .iter()
-        // Shoehorn `http://` in, if the user understandably forgot to do so
-        .for_each(|mg_alpha| {
-            if !mg_alpha.contains("http") {
-                panic!("Graph Merger expects an http in its MG_ALPHAS, got {}", mg_alpha)
-            }
-        });
 
     // todo: the intitializer should give a cache to each service
     let graph_merger = &mut make_ten(async {

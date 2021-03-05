@@ -44,6 +44,8 @@ x-common-variables:
     SQS_ACCESS_KEY_ID: ${SQS_ACCESS_KEY_ID}
     SQS_ACCESS_KEY_SECRET: ${SQS_ACCESS_KEY_SECRET}
     SQS_ENDPOINT: ${SQS_ENDPOINT}
+  rust-backtrace: &rust-backtrace
+    RUST_BACKTRACE: ${RUST_BACKTRACE}
 
 services:
   ########################################################################
@@ -146,6 +148,7 @@ services:
       <<: *s3-env
       SOURCE_QUEUE_URL: "${SQS_ENDPOINT}/000000000000/grapl-sysmon-graph-generator-queue"
       <<: *sqs-env
+      <<: *rust-backtrace
     depends_on:
       - grapl-provision
       - localstack
@@ -168,6 +171,7 @@ services:
       <<: *s3-env
       SOURCE_QUEUE_URL: "${SQS_ENDPOINT}/queue/grapl-osquery-graph-generator-queue"
       <<: *sqs-env
+      <<: *rust-backtrace
     depends_on:
       - grapl-provision
       - localstack
@@ -190,6 +194,7 @@ services:
       <<: *s3-env
       SOURCE_QUEUE_URL: "${SQS_ENDPOINT}/queue/grapl-node-identifier-queue"
       <<: *sqs-env
+      <<: *rust-backtrace
     tty: false
     depends_on:
       - grapl-provision
@@ -213,6 +218,7 @@ services:
       <<: *s3-env
       SOURCE_QUEUE_URL: "${SQS_ENDPOINT}/queue/grapl-node-identifier-retry-queue"
       <<: *sqs-env
+      <<: *rust-backtrace
     tty: false
     depends_on:
       - grapl-provision
@@ -237,6 +243,7 @@ services:
       <<: *s3-env
       SOURCE_QUEUE_URL: "${SQS_ENDPOINT}/queue/grapl-graph-merger-queue"
       <<: *sqs-env
+      <<: *rust-backtrace
     tty: false
     depends_on:
       - dgraph
@@ -260,6 +267,7 @@ services:
       <<: *s3-env
       SOURCE_QUEUE_URL: "${SQS_ENDPOINT}/queue/grapl-analyzer-dispatcher-queue"
       <<: *sqs-env
+      <<: *rust-backtrace
     tty: false
     depends_on:
       - localstack
