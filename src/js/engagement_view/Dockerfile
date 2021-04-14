@@ -20,7 +20,6 @@ COPY js/engagement_view .
 FROM engagement-view-deps AS engagement-view-build
 
 # build sources
-RUN yarn add react-scripts
 RUN yarn build
 
 # no-op the base image cmd, so it doesn't launch a Node repl
